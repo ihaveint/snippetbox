@@ -16,6 +16,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 	files := []string{
 		"./ui/html/home.page.tmpl",
+		"./ui/html/footer.partial.tmpl",
 		"./ui/html/base.layout.tmpl",
 	}
 
@@ -31,8 +32,6 @@ func home(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 		http.Error(w, "Internal Server Error", 500)
 	}
-
-	w.Write([]byte("Hello from Snippetbox"))
 }
 
 func showSnippet(w http.ResponseWriter, r *http.Request) {
