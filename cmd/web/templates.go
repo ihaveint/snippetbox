@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ihaveint/snippetbox/pkg/models"
 	"html/template"
+	"net/url"
 	"path/filepath"
 	"time"
 )
@@ -11,6 +12,8 @@ type templateData struct {
 	CurrentYear int
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
+	FormErrors  map[string]string
+	FormData    url.Values
 }
 
 func humanDate(t time.Time) string {
