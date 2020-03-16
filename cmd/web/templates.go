@@ -4,12 +4,21 @@ import (
 	"github.com/ihaveint/snippetbox/pkg/models"
 	"html/template"
 	"path/filepath"
+	"time"
 )
 
 type templateData struct {
 	CurrentYear int
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
+}
+
+func humanDate(t time.Time) string {
+	return t.Format("02 Jan 2006 at 15:04")
+}
+
+var functions = template.FuncMap{
+	"humanDate": humanDate,
 }
 
 func newTemplateCache(dir string) (map[string]*template.Template, error) {
@@ -24,7 +33,7 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 	for _, page := range pages {
 		name := filepath.Base(page)
 
-		template, err := template.ParseFiles(page)
+		template, err := template.New(name).Funcs(functions).ParseFiles(page)
 
 		if err != nil {
 			return nil, err
