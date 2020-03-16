@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"runtime/debug"
@@ -12,10 +13,15 @@ func (app *application) render(w http.ResponseWriter, r *http.Request, name stri
 		app.serverError(w, fmt.Errorf("The template %s does not exist", name))
 		return
 	}
-	err := template.Execute(w, *td)
+
+	buf := new(bytes.Buffer)
+
+	err := template.Execute(buf, td)
 	if err != nil {
 		app.serverError(w, err)
 	}
+
+	buf.WriteTo(w)
 }
 
 func (app *application) serverError(w http.ResponseWriter, err error) {
