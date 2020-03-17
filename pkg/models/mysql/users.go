@@ -19,7 +19,7 @@ func (m *UserModel) Insert(name, email, password string) error {
 	}
 
 	statement := `INSERT INTO users (name, email, hashed_password, created)
-VALUES (?,?,?,UTC_TIMESTAMP())`
+	VALUES (?,?,?,UTC_TIMESTAMP())`
 
 	_, err = m.DB.Exec(statement, name, email, string(hashedPassword))
 	if err != nil {
@@ -54,6 +54,15 @@ func (m *UserModel) Authenticate(email, password string) (int, error) {
 }
 
 func (m *UserModel) Get(id int) (*models.User, error) {
-	return nil, nil
+	s := &models.User{}
 
+	statement := `SELECT id, name, email, created FROM users WHERE id = ?`
+	err := m.DB.QueryRow(statement, id).Scan(&s.ID, &s.Name, &s.Email, &s.Created)
+	if err == sql.ErrNoRows {
+		return nil, models.ErrNoRecord
+	} else if err != nil {
+		return nil, err
+	}
+
+	return s, nil
 }
