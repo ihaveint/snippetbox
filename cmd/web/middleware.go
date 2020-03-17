@@ -41,3 +41,15 @@ func secureHeaders(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(fn)
 }
+
+func (app *application) requireAuthenticatedUser(next http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		if app.authenticatedUser(r) == 0 {
+			http.Redirect(w, r, "/user/login", 302)
+			return
+		}
+		next.ServeHTTP(w, r)
+	}
+
+	return http.HandlerFunc(fn)
+}
