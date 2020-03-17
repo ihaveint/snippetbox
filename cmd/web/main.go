@@ -30,7 +30,7 @@ type application struct {
 
 func main() {
 	port := flag.String("port", ":4000", "HTTP port")
-	dsn := flag.String("dsn", fmt.Sprintf("web:%s@/snippetbox?parseTime=true", os.Getenv("MySQLPass")), "MySQL DSN")
+	dsn := flag.String("dsn", fmt.Sprintf("%s:%s@/snippetbox?parseTime=true", os.Getenv("MySQLUser"), os.Getenv("MySQLPass")), "MySQL DSN")
 	secret := flag.String("secret", "s6Ndh+pPbnzHbS*+9Pk8qGWhTzbpa@ge", "Secret")
 
 	flag.Parse()
