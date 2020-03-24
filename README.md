@@ -1,5 +1,8 @@
 This a Golang web application which I'm developing while reading Alex Edwards [Let's go](https://lets-go.alexedwards.net/). There might be some differences from the book
 
+## project URL
+I try to maintain a working version of this project in the following link : [snippets](http://snippets.ihaveint.com)
+
 ### Prerequisites
 
 - you need to install [golang-migrate CLI](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate)
@@ -55,3 +58,4 @@ go run cmd/web/!(*_test).go
 
 #### NOTE :
 because the TLS is self-signed, the first time you run the app in a browser, you might get a warning about security problems, based on how your browser works, there should be an option to proceed anyway, if you do this one time, later on you shouldn't get any warnings. for production, it's a good practice if your TLS is not self-signed. you can use [Let's Encrypt](https://letsencrypt.org) for example !
+
